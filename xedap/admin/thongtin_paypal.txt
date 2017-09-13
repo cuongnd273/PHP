@@ -1,0 +1,7 @@
+Người bán:
+acc:nguoimuademo@gmail.com
+pass:nguoimuademo1
+
+Người mua:
+acc:nguoimuademo2@gmail.com
+pass:123456789
