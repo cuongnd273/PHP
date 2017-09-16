@@ -1,6 +1,6 @@
 <?php
 include_once '../connect/db_connect.php';
-if(isset($_POST['magiamgia']){
+if(isset($_POST['magiamgia'])){
 	$db=new DB_Connect();
 	$conn=$db->connect();
 	$sql="select soluong,giamgia from phieugiamgia where ngayhethan >= NOW() and ma='$_POST[magiamgia]'";

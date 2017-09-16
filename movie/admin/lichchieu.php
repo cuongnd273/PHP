@@ -1,9 +1,9 @@
 <?php
-// session_start();
-// if(!isset($_SESSION["admin"]) && !isset($_SESSION["nhanvien"]))
-// {
-// 	header("Location: login.php");
-// }
+session_start();
+if(!isset($_SESSION["nhanvien"]))
+{
+	header("Location: index.php");
+}
 ?>
 <!doctype html>
 <html lang="en">

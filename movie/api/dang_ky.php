@@ -22,7 +22,7 @@ if(isset($_POST['cmnd'])){
 				$resposne['message']='Tai khoan da su dung';
 				echo json_encode($response);
 			}else{
-				$sql="Insert into taikhoan(cmnd,taikhoan,matkhau,hoten,email,sdt,diachi,ngaysinh,gioitinh) values('$_POST[cmnd]','$_POST[taikhoan]','$_POST[matkhau]','$_POST[hoten]','$_POST[email]','$_POST[sdt]','$_POST[diachi]','$_POST[ngaysinh]','$_POST[gioitinh]')";
+				$sql="Insert into taikhoan(cmnd,taikhoan,matkhau,hoten,email,sdt,diachi,ngaysinh) values('$_POST[cmnd]','$_POST[taikhoan]','$_POST[matkhau]','$_POST[hoten]','$_POST[email]','$_POST[sdt]','$_POST[diachi]','$_POST[ngaysinh]')";
 				$result=mysqli_query($conn,$sql);
 				if($result){
 					$response['status']=200;

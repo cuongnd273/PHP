@@ -23,6 +23,17 @@ if(!isset($_SESSION["nhanvien"]))
 	<!-- ICONS -->
 	<link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
 	<link rel="icon" type="image/png" sizes="96x96" href="../assets/img/favicon.png">
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	 <link rel="stylesheet" href="http://jqueryui.com/resources/demos/style.css">
+	 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+	 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<script type="text/javascript">
+		 $( function() {
+			$( "#ngayhethan" ).datepicker({
+				 dateFormat: "yy-mm-dd",
+			}).datepicker("setDate", new Date());;
+		  } );
+	</script>
 </head>
 <body>
 	<!-- WRAPPER -->
@@ -35,24 +46,51 @@ if(!isset($_SESSION["nhanvien"]))
 			<!-- MAIN CONTENT -->
 			<div class="main-content">
 				<div class="container-fluid">
+					<div class="row">
+							<div class="col-md-10 col-md-offset-4">
+								<div class="col-lg-5">
+									<form action="" method="post">
+										<table>
+											<tr>
+												<td><label>Mã </label></td>
+												<td><input type="text" id="ma" class="form-control"></td>
+											</tr>
+											<tr>
+												<td><label>Thời hạn </label></td>
+												<td><input type="text" id="ngayhethan" class="form-control"></td>
+											</tr>
+											<tr>
+												<td><label>Giảm giá </label></td>
+												<td><input type="number" id="giamgia" value="10" class="form-control"></td>
+											</tr>
+											<tr>
+												<td><label>Số lượng </label></td>
+												<td><input type="number" id="soluong" value="10" class="form-control"></td>
+											</tr>
+											<tr>
+												<td></td>
+												<td><button style="margin-top: 20px" type="button" class="btn btn-sm btn-success" onclick="add();">Thêm</button>
+											</tr>
+										</table>
+									</form>
+								</div>
+							</div>
+						</div>
 					<div class="row" style="margin-top: 20px">
-						<div class="col-lg-7 col-md-offset-3">
+						<div class="col-lg-4 col-md-offset-4">
 							<!-- BORDERED TABLE -->
+							<div class="alert alert-success" id="alert-success-top" ><?php if(isset($mess)) echo $mess;?></div>
 							<div class="panel">
 								<div class="panel-heading">
-									<h3 class="panel-title">Hóa đơn</h3>
+									<h3 class="panel-title">Phiếu giảm giá</h3>
 								</div>
 								<div class="panel-body">
-								<div class="alert alert-success" id="alert-success-top" ><?php if(isset($mess)) echo $mess;?></div>
 									<table class="table table-bordered">
 										<thead>
 											<tr>
-												<th  style="text-align:center">Ngày tạo</th>
-												<th  style="text-align:center">Tổng tiền</th>
-												<th  style="text-align:center">Giảm giá</th>
-												<th  style="text-align:center">Chi tiết</th>
-												<th  style="text-align:center">Trạng thái</th>
-												<th></th>
+												<th style="text-align:center">Mã</th>
+												<th style="text-align:center">Ngày hết hạn</th>
+												<th style="text-align:center">Số lượng</th>
 											</tr>
 										</thead>
 										<tbody>
@@ -60,26 +98,14 @@ if(!isset($_SESSION["nhanvien"]))
 											include_once '../connect/db_connect.php';
 											$db=new DB_Connect();
 											$conn=$db->connect();
-											$id=$_GET['mataikhoan'];
-											$result=mysqli_query($conn,"select * from hoadon where taikhoan='$id' order by ngaytao desc");
+											$result=mysqli_query($conn,"select * from phieugiamgia");
 											while($row=mysqli_fetch_array($result)){
 												echo '
 												<tr>
-													<td align="center">'.$row['ngaytao'].'</td>
-													<td align="center">'.$row['tongtien'].'</td>
-													<td align="center">'.$row['giamgia'].' %</td>';
-												
-												echo	
-													'<td align="center" class="col-md-1"><a href="chitiethoadon.php?mahoadon='.$row['mahoadon'].'"><img width="30" height="30" type="image" src="../assets/img/info.png"/></a></td>
+													<td>'.$row['ma'].'</td>
+													<td>'.$row['ngayhethan'].'</td>
+													<td>'.$row['soluong'].'</td>
 												';
-
-												if($row['trangthai']==0){
-													echo '<td align="center">Chưa thanh toán</td>';
-													echo '<td ><button type="button" class="btn btn-sm btn-success" onclick="thanhtoan('.$row['mahoadon'].')">Thanh toán</button></td>';
-												}
-												else
-													echo '<td align="center">Đã thanh toán</td>';
-
 												echo '</tr>';
 											}
 											?>
@@ -99,11 +125,10 @@ if(!isset($_SESSION["nhanvien"]))
 	</div>
 	<!-- END WRAPPER -->
 	<!-- Javascript -->
-	<script src="../assets/js/jquery/jquery-2.1.0.min.js"></script>
 	<script src="../assets/js/bootstrap/bootstrap.min.js"></script>
 	<script src="../assets/js/plugins/jquery-slimscroll/jquery.slimscroll.min.js"></script>
 	<script src="../assets/js/klorofil.min.js"></script>
-	<script src="../assets/admin/hoadon.js"></script>
+	<script src="../assets/admin/phieugiamgia.js"></script>
 </body>
 
 </html>

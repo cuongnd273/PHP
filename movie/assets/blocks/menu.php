@@ -19,6 +19,7 @@
 							</li>
 						<li><a href="taikhoan.php" class=""><i class="lnr lnr-users"></i> <span>Tài khoản</span></a></li>
 						<li><a href="ngaychieu.php" class=""><i class="lnr lnr-calendar-full"></i> <span>Ngày chiếu</span></a></li>
+						<li><a href="phieugiamgia.php" class=""><i class="lnr lnr-smile"></i> <span>Phiếu giảm giá</span></a></li>
 						<li><a href="logout.php" class=""><i class="lnr lnr-exit"></i> <span>Thoát</span></a></li>
 					</ul>
 				</nav>

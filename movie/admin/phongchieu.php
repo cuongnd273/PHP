@@ -35,24 +35,43 @@ if(!isset($_SESSION["nhanvien"]))
 			<!-- MAIN CONTENT -->
 			<div class="main-content">
 				<div class="container-fluid">
+					<div class="row">
+							<div class="col-md-10 col-md-offset-4">
+								<div class="col-lg-5">
+									<form action="" method="post">
+										<table>
+											<tr>
+												<td><label>Tên phòng </label></td>
+												<td><input type="text" id="tenphong" class="form-control"></td>
+											</tr>
+											<tr>
+												<td><label>Số ghế </label></td>
+												<td><input type="number" id="soghe" value="50" class="form-control"></td>
+											</tr>
+											<tr>
+												<td></td>
+												<td><button style="margin-top: 20px" type="button" class="btn btn-sm btn-success" onclick="add();">Thêm</button>
+											</tr>
+										</table>
+									</form>
+								</div>
+							</div>
+						</div>
 					<div class="row" style="margin-top: 20px">
-						<div class="col-lg-7 col-md-offset-3">
+						<div class="col-lg-4 col-md-offset-4">
 							<!-- BORDERED TABLE -->
+							<div class="alert alert-success" id="alert-success-top" ><?php if(isset($mess)) echo $mess;?></div>
 							<div class="panel">
 								<div class="panel-heading">
-									<h3 class="panel-title">Hóa đơn</h3>
+									<h3 class="panel-title">Phòng chiếu</h3>
 								</div>
 								<div class="panel-body">
-								<div class="alert alert-success" id="alert-success-top" ><?php if(isset($mess)) echo $mess;?></div>
 									<table class="table table-bordered">
 										<thead>
 											<tr>
-												<th  style="text-align:center">Ngày tạo</th>
-												<th  style="text-align:center">Tổng tiền</th>
-												<th  style="text-align:center">Giảm giá</th>
-												<th  style="text-align:center">Chi tiết</th>
-												<th  style="text-align:center">Trạng thái</th>
-												<th></th>
+												<th style="text-align:center">Tên phòng</th>
+												<th style="text-align:center">Số ghế</th>
+												<th style="text-align:center">Xóa</th>
 											</tr>
 										</thead>
 										<tbody>
@@ -60,26 +79,14 @@ if(!isset($_SESSION["nhanvien"]))
 											include_once '../connect/db_connect.php';
 											$db=new DB_Connect();
 											$conn=$db->connect();
-											$id=$_GET['mataikhoan'];
-											$result=mysqli_query($conn,"select * from hoadon where taikhoan='$id' order by ngaytao desc");
+											$result=mysqli_query($conn,"select * from phongchieu where isDelete=false");
 											while($row=mysqli_fetch_array($result)){
 												echo '
 												<tr>
-													<td align="center">'.$row['ngaytao'].'</td>
-													<td align="center">'.$row['tongtien'].'</td>
-													<td align="center">'.$row['giamgia'].' %</td>';
-												
-												echo	
-													'<td align="center" class="col-md-1"><a href="chitiethoadon.php?mahoadon='.$row['mahoadon'].'"><img width="30" height="30" type="image" src="../assets/img/info.png"/></a></td>
+													<td>'.$row['tenphong'].'</td>
+													<td>'.$row['soghe'].'</td>
+													<td><input width="30" height="30" type="image" src="../assets/img/delete.png" onclick="del('.$row['maphong'].')"/></td>
 												';
-
-												if($row['trangthai']==0){
-													echo '<td align="center">Chưa thanh toán</td>';
-													echo '<td ><button type="button" class="btn btn-sm btn-success" onclick="thanhtoan('.$row['mahoadon'].')">Thanh toán</button></td>';
-												}
-												else
-													echo '<td align="center">Đã thanh toán</td>';
-
 												echo '</tr>';
 											}
 											?>
@@ -103,7 +110,7 @@ if(!isset($_SESSION["nhanvien"]))
 	<script src="../assets/js/bootstrap/bootstrap.min.js"></script>
 	<script src="../assets/js/plugins/jquery-slimscroll/jquery.slimscroll.min.js"></script>
 	<script src="../assets/js/klorofil.min.js"></script>
-	<script src="../assets/admin/hoadon.js"></script>
+	<script src="../assets/admin/phongchieu.js"></script>
 </body>
 
 </html>

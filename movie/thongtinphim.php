@@ -1,22 +1,47 @@
+<?php
+ob_start();
+session_start();
+?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <title>Khali Cinema</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<link rel="stylesheet" href="assets/user/css/style.css" type="text/css" media="all" />
-<script type="text/javascript" src="assets/user/js/jquery-1.4.2.min.js"></script>
-<script type="text/javascript" src="assets/user/js/jquery-func.js"></script>
+<link rel="stylesheet" href="assets/css/style.css" type="text/css" media="all" />
+<script type="text/javascript" src="assets/js/jquery-1.4.2.min.js"></script>
+<script type="text/javascript" src="assets/js/jquery-func.js"></script>
+<script type="text/javascript">
+  function lichchieu(malichchieu,status){
+    if(status==true){
+      var link="datve.php?malichchieu="+malichchieu;
+      window.location.href=link;
+    }else{
+      var link="login.php";
+      window.location.href=link;
+    }
+  }
+</script>
 <!--[if IE 6]><link rel="stylesheet" href="css/ie6.css" type="text/css" media="all" /><![endif]-->
 </head>
 <body>
 <!-- START PAGE SOURCE -->
 <div id="shell">
   <div id="header">
-    <h1 id="logo"><a href="#">MovieHunter</a></h1>
+    <h1 id="logo"><a href="index.php">MovieHunter</a></h1>
     <div id="navigation">
       <ul>
-        <li><a class="active" href="#">HOME</a></li>
-        <li><a href="#">LOGIN</a></li>
+        <li><a href="index.php">HOME</a></li>
+        <?php
+        if(!isset($_SESSION['user'])){
+          echo '<li><a href="login.php">LOGIN</a></li>';
+          $status=false;
+        }
+        else {
+          echo '<li><a href="">Hi, '.$_SESSION['user'].'</a></li>';
+          echo '<li><a href="logout.php">Thoát</a></li>';
+          $status=true;
+        }
+        ?>
       </ul>
     </div>
     <div id="sub-navigation">
@@ -34,7 +59,7 @@
           $id=$_GET['maphim'];
           $result=mysqli_query($conn,"select * from phim,giave where maphim='$id' and phim.loaive=magia");
           $row=mysqli_fetch_array($result);
-          echo '<img width="250" height="430" src="images/'.$row['anh'].'">';
+          echo '<img width="250" height="320" src="images/'.$row['anh'].'">';
         ?>
           
         </div>
@@ -42,23 +67,26 @@
         <?php
         echo '
             <ul>
-            <li><strong style="color:#FFF;font-size: 15px;font-style: bold;">Khởi chiếu:  </strong>Từ '.$row['ngaybatdau'].' đến '.$row['ngayketthuc'].'</li>
-            <li><strong style="color:#FFF;font-size: 15px;font-style: bold;">Đạo diễn:  </strong>'.$row['daodien'].'</li>
-            <li><strong style="color:#FFF;font-size: 15px;font-style: bold;">Diễn viên:  </strong>'.$row['dienvien'].'</li>
-            <li><strong style="color:#FFF;font-size: 15px;font-style: bold;">Thời lượng:  </strong>'.$row['thoiluong'].'</li>
-            <li><strong style="color:#FFF;font-size: 15px;font-style: bold;">Giá vé:  </strong>'.$row['gia'].' VND</li>
-            <li><strong style="color:#FFF;font-size: 15px;font-style: bold;">Tóm tắt phim:  </strong><p>'.$row['tomtat'].'</p></li>
+            <li><strong style="color:#000;font-size: 15px;font-style: bold;">Khởi chiếu:  </strong><strong style="color:#000;">Từ '.$row['ngaybatdau'].' đến '.$row['ngayketthuc'].'</strong></li>
+            <li><strong style="color:#000;font-size: 15px;font-style: bold;">Đạo diễn:  </strong><strong style="color:#000;">'.$row['daodien'].'</strong></li>
+            <li><strong style="color:#000;font-size: 15px;font-style: bold;">Diễn viên:  </strong><strong style="color:#000;">'.$row['dienvien'].'</strong></li>
+            <li><strong style="color:#000;font-size: 15px;font-style: bold;">Thời lượng:  </strong><strong style="color:#000;">'.$row['thoiluong'].'</strong></li>
+            <li><strong style="color:#000;font-size: 15px;font-style: bold;">Giá vé:  </strong><strong style="color:#000;">'.$row['gia'].' VND</strong></li>
+            <li><strong style="color:#000;font-size: 15px;font-style: bold;">Tóm tắt phim:  </strong><p style="color:#000;">'.$row['tomtat'].'</p></li>
           </ul>
         ';
         ?>
         </div>
       </div>
      <div style="margin: 50px;">
-       <h1>Lịch chiếu</h1>
+       <h1 style="color:#000">Lịch chiếu</h1>
         <ul>
-          <li style="padding:10px;"><a>27/09/2017</a></li>
-          <li style="padding:10px;"><a>27/09/2017</a></li>
-          <li style="padding:10px;"><a>27/09/2017</a></li>
+          <?php
+          $result=mysqli_query($conn,"select * from lichchieu where phim='$id' and ngaychieu >NOW() group by ngaychieu order by ngaychieu desc");
+          while($row=mysqli_fetch_array($result)){
+            echo '<li style="padding:10px;"><a style="color:green;" onclick="lichchieu(\''.$row['malichchieu'].'\','.$status.')">'.$row['ngaychieu'].'</a></li>';
+          }
+          ?>
         </ul>
      </div>
     </div>
