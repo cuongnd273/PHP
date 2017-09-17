@@ -1,6 +1,7 @@
 <?php
+ob_start();
 session_start();
-if(!isset($_SESSION["nhanvien"]))
+if(!isset($_SESSION["nhanvien"]) && !isset($_SESSION['admin']))
 {
 	header("Location: index.php");
 }
@@ -67,7 +68,7 @@ if(!isset($_SESSION["nhanvien"]))
 											$db=new DB_Connect();
 											$conn=$db->connect();
 											$id=$_GET['maphim'];
-											$sql="select * from phongchieu";
+											$sql="select * from phongchieu where isDelete=false";
 											$result=$conn->query($sql);
 											echo '<tr>
 												<td><label>Phòng chiếu</label></td>

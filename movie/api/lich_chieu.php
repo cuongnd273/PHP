@@ -3,7 +3,7 @@ include_once '../connect/db_connect.php';
 if(isset($_GET['maphim'])){
 	$db=new DB_Connect();
 	$conn=$db->connect();
-	$sql="select ngaychieu from lichchieu where phim=$_GET[maphim] group by ngaychieu";
+	$sql="select ngaychieu from lichchieu where phim=$_GET[maphim] and ngaychieu > NOW() group by ngaychieu";
 	$result=mysqli_query($conn,$sql);
 	$response=array();
 	if($result){

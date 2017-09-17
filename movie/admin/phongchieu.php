@@ -1,6 +1,7 @@
 <?php
+ob_start();
 session_start();
-if(!isset($_SESSION["nhanvien"]))
+if(!isset($_SESSION["nhanvien"]) && !isset($_SESSION['admin']))
 {
 	header("Location: index.php");
 }
@@ -71,7 +72,10 @@ if(!isset($_SESSION["nhanvien"]))
 											<tr>
 												<th style="text-align:center">Tên phòng</th>
 												<th style="text-align:center">Số ghế</th>
-												<th style="text-align:center">Xóa</th>
+												<?php
+												if(isset($_SESSION['admin']))
+													echo '<th style="text-align:center">Xóa</th>';								
+												?>
 											</tr>
 										</thead>
 										<tbody>
@@ -83,8 +87,11 @@ if(!isset($_SESSION["nhanvien"]))
 											while($row=mysqli_fetch_array($result)){
 												echo '
 												<tr>
-													<td>'.$row['tenphong'].'</td>
-													<td>'.$row['soghe'].'</td>
+													<td align="center">'.$row['tenphong'].'</td>
+													<td align="center">'.$row['soghe'].'</td>';
+
+												if(isset($_SESSION['admin']))
+												echo '
 													<td><input width="30" height="30" type="image" src="../assets/img/delete.png" onclick="del('.$row['maphong'].')"/></td>
 												';
 												echo '</tr>';

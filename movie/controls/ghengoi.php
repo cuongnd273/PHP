@@ -6,7 +6,7 @@ $response=array();
 if(isset($_GET['malichchieu'])){
 	$resultG=mysqli_query($conn,"select soghe from phongchieu,lichchieu where phongchieu=maphong and malichchieu='$_GET[malichchieu]'");
 	$soghe=mysqli_fetch_row($resultG)[0];
-	$result=mysqli_query($conn,"select gia,tenphim,ngaychieu,batdau,ketthuc from lichchieu,giave,phim where malichchieu='$_GET[malichchieu]' and giave.magia=phim.loaive and lichchieu.phim=phim.maphim");
+	$result=mysqli_query($conn,"select gia,tenphim,ngaychieu,DATE_FORMAT(batdau, '%H:%i') as batdau,DATE_FORMAT(ketthuc, '%H:%i') as ketthuc from lichchieu,giave,phim where malichchieu='$_GET[malichchieu]' and giave.magia=phim.loaive and lichchieu.phim=phim.maphim");
 	$info=mysqli_fetch_row($result);
 	$giave=$info[0];
 	$tenphim=$info[1];

@@ -1,6 +1,7 @@
 <?php
+ob_start();
 session_start();
-if(!isset($_SESSION["nhanvien"]))
+if(!isset($_SESSION["nhanvien"]) && !isset($_SESSION['admin']))
 {
 	header("Location: index.php");
 }

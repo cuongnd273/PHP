@@ -1,6 +1,7 @@
 <?php
+ob_start();
 session_start();
-if(!isset($_SESSION["nhanvien"]))
+if(!isset($_SESSION["nhanvien"]) && !isset($_SESSION['admin']))
 {
 	header("Location: index.php");
 }
@@ -139,8 +140,14 @@ if(!isset($_SESSION["nhanvien"]))
 												<th style="text-align:center">Ngày kết thúc</th>
 												<th style="text-align:center">Ảnh</th>
 												<th style="text-align:center">Giá vé</th>
-												<th style="text-align:center">Sửa</th>
-												<th style="text-align:center">Xóa</th>
+												<?php
+												if(isset($_SESSION['admin'])){
+													echo '
+														<th style="text-align:center">Sửa</th>
+														<th style="text-align:center">Xóa</th>
+													';
+												}
+												?>
 												<th style="text-align:center">Lịch chiếu</th>
 											</tr>
 										</thead>
@@ -164,9 +171,12 @@ if(!isset($_SESSION["nhanvien"]))
 													<td>'.$row['ngaybatdau'].'</td>
 													<td>'.$row['ngayketthuc'].'</td>
 													<td><img width="50" height="50" src="../images/'.$row['anh'].'"></td>
-													<td>'.$row['gia'].'</td>
+													<td>'.$row['gia'].'</td>';
+												if(isset($_SESSION['admin']))
+												echo '
 													<td align="center" class="col-md-1"><input width="30" height="30" type="image" src="../assets/img/edit.png" onclick="edit('.$row['maphim'].')"/></td>
-													<td align="center" class="col-md-1"><input width="30" height="30" type="image" src="../assets/img/delete.png" onclick="del('.$row['maphim'].')"/></td>
+													<td align="center" class="col-md-1"><input width="30" height="30" type="image" src="../assets/img/delete.png" onclick="del('.$row['maphim'].')"/></td>';
+												echo '
 													<td align="center" class="col-md-1"><input width="30" height="30" type="image" src="../assets/img/calendar.png" onclick="calendar('.$row['maphim'].')"/></td>
 												';
 												echo '</tr>';

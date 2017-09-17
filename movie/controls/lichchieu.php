@@ -7,7 +7,7 @@ if(isset($_POST['add'])){
 	$thoiluong=$phim['thoiluong'];
 	$batdau=$_POST['batdau'];
 	$ketthuc = date('H:i', strtotime($batdau.'+'.$thoiluong.' minute'));
-	$sql="select * from lichchieu where phim='$_POST[maphim]' and phongchieu='$_POST[phongchieu]' and ngaychieu='$_POST[ngaychieu]' and ((batdau < '$batdau' and ketthuc > '$batdau') or (batdau > '$batdau' and ketthuc < '$ketthuc') or (batdau < '$ketthuc' and ketthuc > '$ketthuc'))";
+	$sql="select * from lichchieu where phongchieu='$_POST[phongchieu]' and ngaychieu='$_POST[ngaychieu]' and ((batdau < '$batdau' and ketthuc > '$batdau') or (batdau > '$batdau' and ketthuc < '$ketthuc') or (batdau < '$ketthuc' and ketthuc > '$ketthuc'))";
 	$result=mysqli_query($conn,$sql);
 	$count=mysqli_num_rows($result);
 	if($count >0){

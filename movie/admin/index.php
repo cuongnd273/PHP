@@ -2,7 +2,7 @@
 ob_start();
 session_start();
 $msg="";
-if(isset($_SESSION["nhanvien"]))
+if(isset($_SESSION["nhanvien"]) || isset($_SESSION['admin']))
 {
 	header("Location: phongchieu.php");
 }
@@ -40,13 +40,20 @@ if(isset($_SESSION["nhanvien"]))
 							$db=new DB_Connect();
 							$conn=$db->connect();
 							if(isset($_POST['login'])){
-								$result=mysqli_query($conn,"select * from nhanvien where taikhoan='$_POST[taikhoan]' and matkhau='$_POST[matkhau]'");
+								$result=mysqli_query($conn,"select * from admin where taikhoan='$_POST[taikhoan]' and matkhau='$_POST[matkhau]'");
 								if(mysqli_num_rows($result)>0){
-									$_SESSION['nhanvien']=true;
-									header("Location: index.php");
+									$_SESSION['admin']=1;
+									header("Location: phongchieu.php");
 								}else{
-									$msg="Sai thông tin đăng nhập!!!";
+									$result=mysqli_query($conn,"select * from nhanvien where taikhoan='$_POST[taikhoan]' and matkhau='$_POST[matkhau]'");
+									if(mysqli_num_rows($result)>0)
+									{
+										$nhanvien=mysqli_fetch_array($result);
+										$_SESSION['nhanvien']=$nhanvien['hoten'];
+										header("Location: phongchieu.php");
+									}
 								}
+								$msg="Sai thông tin đăng nhập!!!";
 							}
 							?>
 							<h4 class = "form-signin-heading"><?php echo $msg; ?></h4>

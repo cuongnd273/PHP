@@ -11,14 +11,9 @@ session_start();
 <script type="text/javascript" src="assets/js/jquery-1.4.2.min.js"></script>
 <script type="text/javascript" src="assets/js/jquery-func.js"></script>
 <script type="text/javascript">
-  function lichchieu(malichchieu,status){
-    if(status==true){
+  function lichchieu(malichchieu){
       var link="datve.php?malichchieu="+malichchieu;
       window.location.href=link;
-    }else{
-      var link="login.php";
-      window.location.href=link;
-    }
   }
 </script>
 <!--[if IE 6]><link rel="stylesheet" href="css/ie6.css" type="text/css" media="all" /><![endif]-->
@@ -78,17 +73,29 @@ session_start();
         ?>
         </div>
       </div>
-     <div style="margin: 50px;">
+      <?php
+      if(date("Y-m-d")>=$row['ngaybatdau']){
+      echo '
+        <div style="margin: 50px;">
        <h1 style="color:#000">Lịch chiếu</h1>
-        <ul>
-          <?php
-          $result=mysqli_query($conn,"select * from lichchieu where phim='$id' and ngaychieu >NOW() group by ngaychieu order by ngaychieu desc");
+        <ul>';
+          $result=mysqli_query($conn,"select * from lichchieu where phim='$id' and ngaychieu >NOW() group by ngaychieu order by ngaychieu asc");
           while($row=mysqli_fetch_array($result)){
-            echo '<li style="padding:10px;"><a style="color:green;" onclick="lichchieu(\''.$row['malichchieu'].'\','.$status.')">'.$row['ngaychieu'].'</a></li>';
+            $ngaychieu=$row['ngaychieu'];
+            echo '<li style="padding:10px;color:green;font-family:bold;font-size:15px;">'.$row['ngaychieu'];
+            echo '<ul>';
+            $resultTime=mysqli_query($conn,"select malichchieu,tenphong,DATE_FORMAT(batdau, '%H:%i') as batdau,DATE_FORMAT(ketthuc, '%H:%i') as ketthuc from lichchieu,phongchieu where phim='$id' and ngaychieu = '$ngaychieu' and lichchieu.phongchieu=phongchieu.maphong");
+            while($time=mysqli_fetch_array($resultTime)){
+              echo '<li style="padding:5px;color:green;font-family:bold;font-size:15px;" ><a onclick="lichchieu(\''.$row['malichchieu'].'\')">'.$time['tenphong'].'  '.$time['batdau'].'-'.$time['ketthuc'].'</a></li>';
+            }
+            echo '</ul>';
+            echo '</li>';
           }
-          ?>
+      echo '
         </ul>
-     </div>
+     </div>';
+      }
+      ?>
     </div>
 
     <div class="cl">&nbsp;</div>
