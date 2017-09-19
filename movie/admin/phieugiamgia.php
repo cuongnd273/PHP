@@ -91,6 +91,7 @@ if(!isset($_SESSION["nhanvien"]) && !isset($_SESSION['admin']))
 											<tr>
 												<th style="text-align:center">Mã</th>
 												<th style="text-align:center">Ngày hết hạn</th>
+												<th style="text-align:center">Giảm giá</th>
 												<th style="text-align:center">Số lượng</th>
 											</tr>
 										</thead>
@@ -105,6 +106,7 @@ if(!isset($_SESSION["nhanvien"]) && !isset($_SESSION['admin']))
 												<tr>
 													<td>'.$row['ma'].'</td>
 													<td>'.$row['ngayhethan'].'</td>
+													<td>'.$row['giamgia'].' %</td>
 													<td>'.$row['soluong'].'</td>
 												';
 												echo '</tr>';
