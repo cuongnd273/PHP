@@ -37,11 +37,12 @@ if(!isset($_SESSION["nhanvien"]) && !isset($_SESSION['admin']))
 			<div class="main-content">
 				<div class="container-fluid">
 					<div class="row" style="margin-top: 20px">
-						<div class="col-lg-6 col-md-offset-3">
+						<div class="col-lg-9 col-md-offset-2">
 							<!-- BORDERED TABLE -->
 							<div class="panel">
 								<div class="panel-heading">
 									<h3 class="panel-title">Tài khoản</h3>
+									<div id="alert-success-top" ><?php if(isset($mess)) echo $mess;?></div>
 								</div>
 								<div class="panel-body">
 									<table class="table table-bordered">
@@ -52,6 +53,7 @@ if(!isset($_SESSION["nhanvien"]) && !isset($_SESSION['admin']))
 												<th>Số điện thoại</th>
 												<th>Chi tiết</th>
 												<th>Hóa đơn</th>
+												<th>Vô hiệu</th>
 											</tr>
 										</thead>
 										<tbody>
@@ -59,15 +61,16 @@ if(!isset($_SESSION["nhanvien"]) && !isset($_SESSION['admin']))
 											include_once '../connect/db_connect.php';
 											$db=new DB_Connect();
 											$conn=$db->connect();
-											$result=mysqli_query($conn,"select * from taikhoan");
+											$result=mysqli_query($conn,"select * from taikhoan where isDelete=false");
 											while($row=mysqli_fetch_array($result)){
 												echo '
 												<tr>
 													<td>'.$row['taikhoan'].'</td>
-													<td>'.$row['email'].'</td>
+													<td width=215>'.$row['email'].'</td>
 													<td>'.$row['sdt'].'</td>
 													<td align="center" class="col-md-1"><input width="30" height="30" type="image" src="../assets/img/edit.png" onclick="info('.$row['mataikhoan'].')"/></td>
 													<td align="center" class="col-md-1"><input width="30" height="30" type="image" src="../assets/img/bill.png" onclick="bill('.$row['mataikhoan'].')"/></td>
+													<td align="center" class="col-md-1"><input width="30" height="30" type="image" src="../assets/img/cancle.png" onclick="kick('.$row['mataikhoan'].')"/></td>
 												';
 												echo '</tr>';
 											}

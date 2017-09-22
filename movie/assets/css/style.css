@@ -216,7 +216,6 @@ h1#logo a {
 }
 .box {
 	width:980px;
-	border-bottom:1px dashed #413e3e;
 	padding-bottom:21px;
 }
 .box .head {
@@ -232,6 +231,8 @@ h1#logo a {
 	width:152px;
 	float:left;
 	padding-right:12px;
+	height: 250px;
+	overflow: hidden;
 }
 .movie-image {
 	float:left;

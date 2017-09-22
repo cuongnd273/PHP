@@ -3,7 +3,7 @@ include_once '../connect/db_connect.php';
 if(isset($_POST['taikhoan']) && isset($_POST['matkhau'])){
 	$db=new DB_Connect();
 	$conn=$db->connect();
-	$result=mysqli_query($conn,"select * from taikhoan where taikhoan='$_POST[taikhoan]' and matkhau='$_POST[matkhau]'");
+	$result=mysqli_query($conn,"select * from taikhoan where taikhoan='$_POST[taikhoan]' and matkhau='$_POST[matkhau]' and isDelete=false");
 	if($result){
 		if(mysqli_num_rows($result)>0){
 			$row=mysqli_fetch_array($result);

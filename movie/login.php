@@ -64,7 +64,7 @@ if(isset($_SESSION["user"]))
   $db=new DB_Connect();
   $conn=$db->connect();
   if(isset($_POST['dangnhap'])){
-    $result=mysqli_query($conn,"select * from taikhoan where taikhoan='$_POST[taikhoan]' and matkhau='$_POST[matkhau]'");
+    $result=mysqli_query($conn,"select * from taikhoan where taikhoan='$_POST[taikhoan]' and matkhau='$_POST[matkhau]' and isDelete=false");
     if(mysqli_num_rows($result)>0){
       $row=mysqli_fetch_array($result);
       $_SESSION['user']=$row['hoten'];
@@ -145,7 +145,7 @@ if(isset($_SESSION["user"]))
                     <td><input placeholder="Email" type="email" name="dk_email" class="form-control"></td>
                   </tr>
                   <tr>
-                    <td><input placeholder="Số điện thoái" type="text" name="dk_sdt" class="form-control"></td>
+                    <td><input placeholder="Số điện thoại" type="text" name="dk_sdt" class="form-control"></td>
                   </tr>
                   <tr>
                     <td><input placeholder="Địa chỉ" type="text" name="dk_diachi" class="form-control"></td>

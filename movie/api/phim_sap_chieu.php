@@ -3,7 +3,7 @@ include_once '../connect/db_connect.php';
 $db=new DB_Connect();
 $conn=$db->connect();
 $domain=$_SERVER['HTTP_HOST'];
-$result=mysqli_query($conn,"select * from phim where ngaybatdau > NOW()");
+$result=mysqli_query($conn,"select * from phim where ngaybatdau > NOW() and isDelete=false");
 if($result){
 	$phim=array();
 	while($row=mysqli_fetch_array($result)){

@@ -23,7 +23,7 @@ session_start();
         if(!isset($_SESSION['user']))
           echo '<li><a href="login.php">LOGIN</a></li>';
         else {
-          echo '<li><a href="">Hi, '.$_SESSION['user'].'</a></li>';
+          echo '<li><a href="suathongtin.php?mataikhoan='.$_SESSION['id'].'">Hi, '.$_SESSION['user'].'</a></li>';
           echo '<li><a href="logout.php">Thoát</a></li>';
         }
           
@@ -49,7 +49,7 @@ session_start();
         while($row=mysqli_fetch_array($result)){
           echo '
               <div class="movie" style="padding:20px;">
-                <div class="movie-image"> <span class="play"><span class="name"><a href="thongtinphim.php?maphim='.$row['maphim'].'">'.$row['tenphim'].'</a></span></span> <img src="images/'.$row['anh'].'" alt="" /> </div>
+                <div class="movie-image"><img src="images/'.$row['anh'].'" alt="" /> </div>
                 <div class="rating">
                   <a href="thongtinphim.php?maphim='.$row['maphim'].'"><p>'.$row['tenphim'].'</p></a>
                 </div>

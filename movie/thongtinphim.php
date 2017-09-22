@@ -32,7 +32,7 @@ session_start();
           $status=false;
         }
         else {
-          echo '<li><a href="">Hi, '.$_SESSION['user'].'</a></li>';
+           echo '<li><a href="suathongtin.php?mataikhoan='.$_SESSION['id'].'">Hi, '.$_SESSION['user'].'</a></li>';
           echo '<li><a href="logout.php">Thoát</a></li>';
           $status=true;
         }
